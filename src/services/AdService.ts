@@ -1,5 +1,6 @@
 import { AdRequest, NodeSkinId } from '../types/game';
 import { UnityAdsService } from './unityAds';
+import { InMobiAdsService } from './inmobiAds';
 
 type AdCallback = {
   onAdLoaded?: () => void;
@@ -9,13 +10,18 @@ type AdCallback = {
 
 /**
  * AdServiceController
- * Wired to Unity Ads for real rewarded and interstitial ads.
+ * Wired to two independent ad networks — Unity Ads (primary) and InMobi
+ * (fallback). Not true mediation (no bidding between them); simple rule:
+ * try Unity first, and only reach for InMobi when Unity has no fill. This
+ * maximizes fill rate without needing Unity LevelPlay's separate platform.
  * - Rewarded: shown for Revive, Double Orbs, Skin Preview
  * - Interstitial: shown every 3 game overs
+ * - Banner: main menu only
  */
 class AdServiceController {
   private gameOverCycles = 0;
   private isAdCurrentlyShowing = false;
+  private bannerNetwork: 'unity' | 'inmobi' | null = null;
 
   // Legacy listeners kept for compatibility
   private showAdModalListeners: ((request: AdRequest, durationSec: number) => void)[] = [];
@@ -36,32 +42,49 @@ class AdServiceController {
   }
 
   /**
-   * Call this once after app starts (e.g. after splash screen) to preload ads.
+   * Call this once after app starts (e.g. after splash screen) to preload ads
+   * on both networks.
    */
   public preloadAds(): void {
-    console.log('[AdService] Preloading ads...');
+    console.log('[AdService] Preloading ads (Unity + InMobi)...');
     UnityAdsService.preload().catch((e) =>
-      console.warn('[AdService] Preload error:', e)
+      console.warn('[AdService] Unity preload error:', e)
     );
     UnityAdsService.loadBanner().catch(() => {});
+    InMobiAdsService.preload().catch((e) =>
+      console.warn('[AdService] InMobi preload error:', e)
+    );
   }
 
   /**
    * Show the banner (currently used on the main menu only, hidden everywhere
    * else — including behind any modal — since it renders as a native view
    * above the WebView and would otherwise sit on top of modal content).
+   * Tries Unity first; falls back to InMobi if Unity has no fill.
    */
   public showBannerAd(): void {
-    UnityAdsService.showBanner().catch((e) => console.warn('[AdService] showBannerAd error:', e));
+    UnityAdsService.showBanner()
+      .then(() => {
+        this.bannerNetwork = 'unity';
+      })
+      .catch((e) => {
+        console.warn('[AdService] Unity showBannerAd error, trying InMobi:', e);
+        this.bannerNetwork = 'inmobi';
+        InMobiAdsService.showBanner().catch((e2) =>
+          console.warn('[AdService] InMobi showBannerAd error:', e2)
+        );
+      });
   }
 
   public hideBannerAd(): void {
     UnityAdsService.hideBanner().catch((e) => console.warn('[AdService] hideBannerAd error:', e));
+    InMobiAdsService.hideBanner().catch(() => {});
   }
 
   /**
-   * Show a Unity Rewarded Ad.
-   * Grants reward only if user watches the full ad.
+   * Show a Rewarded Ad. Tries Unity first; falls back to InMobi if Unity
+   * fails to load/show. Grants reward only if user watches the full ad,
+   * on whichever network actually served it.
    */
   public async showRewardedAd(request: AdRequest, callbacks: AdCallback): Promise<void> {
     if (this.isAdCurrentlyShowing) {
@@ -74,12 +97,19 @@ class AdServiceController {
 
     try {
       callbacks.onAdLoaded?.();
-      const rewarded = await UnityAdsService.showRewarded();
-      console.log('[AdService] Rewarded complete, rewarded:', rewarded);
+      let rewarded: boolean;
+      try {
+        rewarded = await UnityAdsService.showRewarded();
+        console.log('[AdService] Rewarded complete (Unity), rewarded:', rewarded);
+      } catch (unityErr) {
+        console.warn('[AdService] Unity rewarded failed, trying InMobi:', unityErr);
+        rewarded = await InMobiAdsService.showRewarded();
+        console.log('[AdService] Rewarded complete (InMobi), rewarded:', rewarded);
+      }
       callbacks.onAdCompleted?.(rewarded);
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : String(err);
-      console.error('[AdService] Rewarded ad failed:', msg);
+      console.error('[AdService] Rewarded ad failed on both networks:', msg);
       callbacks.onAdFailed?.(msg);
     } finally {
       this.isAdCurrentlyShowing = false;
@@ -102,16 +132,26 @@ class AdServiceController {
     return false;
   }
 
+  /**
+   * Tries Unity first; falls back to InMobi if Unity has no fill.
+   */
   private async showInterstitialAd(callbacks?: AdCallback): Promise<void> {
     if (this.isAdCurrentlyShowing) return;
     this.isAdCurrentlyShowing = true;
 
     try {
-      await UnityAdsService.showInterstitial();
+      try {
+        await UnityAdsService.showInterstitial();
+        console.log('[AdService] Interstitial shown (Unity)');
+      } catch (unityErr) {
+        console.warn('[AdService] Unity interstitial failed, trying InMobi:', unityErr);
+        await InMobiAdsService.showInterstitial();
+        console.log('[AdService] Interstitial shown (InMobi)');
+      }
       callbacks?.onAdCompleted?.(false);
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : String(err);
-      console.error('[AdService] Interstitial failed:', msg);
+      console.error('[AdService] Interstitial failed on both networks:', msg);
       callbacks?.onAdFailed?.(msg);
     } finally {
       this.isAdCurrentlyShowing = false;

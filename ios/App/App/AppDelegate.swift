@@ -1,6 +1,7 @@
 import UIKit
 import Capacitor
 import UnityAds
+import InMobiSDK
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,6 +24,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print("[UnityAds] SDK initialized successfully")
             }
         }
+        // ────────────────────────────────────────────────────────────────
+
+        // ─── InMobi Initialization ──────────────────────────────────────
+        IMSdk.initWithAccountID("98c82c630b444946906e8df55d6e442f", consentDictionary: nil, andCompletionHandler: { error in
+            if let error {
+                print("[InMobiAds] Initialization failed: \(error.localizedDescription)")
+            } else {
+                print("[InMobiAds] SDK initialized successfully")
+            }
+        })
         // ────────────────────────────────────────────────────────────────
 
         return true
