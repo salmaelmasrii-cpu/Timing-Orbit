@@ -1,0 +1,11 @@
+!.env.example
+*.log
+.DS_Store
+.env*
+build/
+coverage/
+dist/
+ios/App/*.xcworkspace/xcuserdata/
+ios/App/App.xcodeproj/xcuserdata/
+ios/App/Pods/
+node_modules/

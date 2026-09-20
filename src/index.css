@@ -1,0 +1,137 @@
+@import "tailwindcss";
+
+@layer base {
+  * {
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
+    box-sizing: border-box;
+  }
+
+  html, body, #root {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    touch-action: none;
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+
+  .font-mono-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .font-orbitron {
+    font-family: 'Orbitron', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  .font-rajdhani {
+    font-family: 'Rajdhani', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  .text-glow-cyan {
+    text-shadow: 0 0 12px rgba(0, 240, 255, 0.6), 0 0 24px rgba(0, 240, 255, 0.3);
+  }
+
+  .text-glow-magenta {
+    text-shadow: 0 0 12px rgba(255, 0, 255, 0.6), 0 0 24px rgba(255, 0, 255, 0.3);
+  }
+
+  .text-glow-white {
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+  }
+
+  /* ─── Safe Area Utilities ────────────────────────────────────────────────
+   * These use env(safe-area-inset-*) to adapt to Dynamic Island, notch,
+   * and home indicator on any iPhone/iPad. We add extra breathing room
+   * (12–20px) on top of the device's own inset so content never feels
+   * glued to the edge. The max() picks the larger of the device inset +
+   * extra room vs. the hard-minimum, so it degrades gracefully on devices
+   * without notches or home indicators.
+   * ──────────────────────────────────────────────────────────────────────── */
+  .safe-pt {
+    /* Top: device inset (Dynamic Island / notch) + 16px breathing room, min 28px */
+    padding-top: max(28px, calc(env(safe-area-inset-top, 0px) + 16px));
+  }
+
+  .safe-pb {
+    /* Bottom: home indicator inset + 12px breathing room, min 24px */
+    padding-bottom: max(24px, calc(env(safe-area-inset-bottom, 0px) + 12px));
+  }
+
+  .safe-pl {
+    padding-left: max(16px, calc(env(safe-area-inset-left, 0px) + 4px));
+  }
+
+  .safe-pr {
+    padding-right: max(16px, calc(env(safe-area-inset-right, 0px) + 4px));
+  }
+
+  /* Minimalist Theme-Colored Scrollbars */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scroll-thumb, rgba(0, 82, 255, 0.4)) transparent;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--scroll-thumb, rgba(0, 82, 255, 0.4));
+    border-radius: 9999px;
+    transition: background-color 0.2s ease;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--scroll-thumb-hover, rgba(0, 82, 255, 0.85));
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.03);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+}
+
+@keyframes float-badge {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes fever-glow {
+  0%, 100% { filter: drop-shadow(0 0 10px rgba(255, 180, 0, 0.7)); }
+  50% { filter: drop-shadow(0 0 25px rgba(255, 60, 0, 0.9)); }
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-float {
+  animation: float-badge 2s ease-in-out infinite;
+}
+
+.animate-fever-glow {
+  animation: fever-glow 1.5s ease-in-out infinite;
+}

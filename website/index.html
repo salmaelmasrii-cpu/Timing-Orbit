@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Timing Orbit — Precision Reflex Game</title>
+<meta name="description" content="Timing Orbit is a minimalist, high-precision reflex and timing game for iOS. Test your reaction speed and rhythm.">
+<link rel="icon" href="data:,">
+<style>
+  :root {
+    --bg: #050505;
+    --panel: #0f0f0f;
+    --border: rgba(255,255,255,0.08);
+    --text: #f2f2f2;
+    --text-dim: #9a9a9a;
+    --accent: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 64px 24px 96px; }
+  header { text-align: center; margin-bottom: 56px; }
+  .logo-dot {
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--accent); margin: 0 auto 24px;
+    box-shadow: 0 0 24px rgba(255,255,255,0.5);
+  }
+  h1 {
+    font-size: clamp(28px, 6vw, 44px);
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    margin: 0 0 12px;
+  }
+  .tagline { color: var(--text-dim); font-size: 16px; margin: 0; }
+  .cta {
+    display: flex; gap: 12px; justify-content: center; margin-top: 32px; flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-block;
+    padding: 12px 24px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.15s ease;
+  }
+  .btn:hover { background: rgba(255,255,255,0.06); }
+  .btn.primary { background: var(--accent); color: #000; border-color: var(--accent); }
+  .btn.primary:hover { opacity: 0.85; background: var(--accent); }
+  section { margin-top: 48px; }
+  h2 {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-dim);
+    margin: 0 0 16px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+  }
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+  }
+  .card h3 { margin: 0 0 8px; font-size: 15px; }
+  .card p { margin: 0; color: var(--text-dim); font-size: 13.5px; }
+  footer {
+    margin-top: 80px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+  footer a { color: var(--text-dim); }
+  footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="logo-dot"></div>
+      <h1>Timing Orbit</h1>
+      <p class="tagline">A minimalist, high-precision reflex &amp; timing game for iOS.</p>
+      <div class="cta">
+        <a class="btn primary" href="#">Download on the App Store</a>
+        <a class="btn" href="support.html">Support</a>
+      </div>
+    </header>
+
+    <section>
+      <h2>About</h2>
+      <p>Timing Orbit strips reflex gaming down to its essence: a single orbiting node, a shrinking window of opportunity,
+      and a rising curve of speed and precision. Every level is procedurally tuned — calm openings, tense approaches,
+      and extreme spike levels that test your timing at its limit.</p>
+    </section>
+
+    <section>
+      <h2>Features</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Procedural Levels</h3>
+          <p>Every level is generated from a difficulty curve, with extreme spike levels every 6th stage.</p>
+        </div>
+        <div class="card">
+          <h3>Rhythm-Aware Pacing</h3>
+          <p>Speed eases near targets and surges in open space, like a rhythm game built around anticipation.</p>
+        </div>
+        <div class="card">
+          <h3>Unlockable Node Skins</h3>
+          <p>Earn orbs by playing and unlock a growing set of cosmetic node designs.</p>
+        </div>
+        <div class="card">
+          <h3>Offline First</h3>
+          <p>All progress is stored locally on your device. No account required.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span>&copy; <span id="year"></span> Timing Orbit. All rights reserved.</span>
+      <nav>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="support.html">Support</a>
+        <a href="mailto:salmaelmasrii@gmail.com">Contact</a>
+      </nav>
+    </footer>
+  </div>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

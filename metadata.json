@@ -1,0 +1,6 @@
+{
+  "name": "Timing Orbit",
+  "description": "A high-precision, single-tap casual mobile arcade game featuring dynamic orbital mechanics, dual hitboxes, fever mode, synthesized audio, themes, and progression.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,35 @@
+# app-ads.txt for Timing Orbit (com.salmaelmasry.timingorbit)
+#
+# HOW TO FILL THIS FILE IN — do not guess IDs, copy them exactly from each
+# ad network's own dashboard, since a wrong entry can break ad fill or get
+# flagged as invalid traffic:
+#
+# 1. Unity Ads / Unity LevelPlay:
+#    Unity Dashboard -> Monetization -> your app -> "app-ads.txt" tab.
+#    It gives you an exact line starting with "unityads.unity3d.com" or
+#    "applovin-corp.com" style — copy it exactly as shown, paste below.
+#
+# 2. Google AdMob:
+#    AdMob Console -> Apps -> Timing Orbit (iOS) -> App settings -> App-ads.txt.
+#    It gives you a line like:
+#      google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0
+#    (the "f08c47fec0942fa0" TAG-ID is Google's own, it does not change)
+#
+# 3. Meta Audience Network:
+#    Meta Audience Network dashboard -> Monetization Manager -> your app ->
+#    "app-ads.txt" section. Copy the exact facebook.com line it gives you.
+#
+# 4. InMobi:
+#    InMobi dashboard -> your app -> Monetization -> ads.txt/app-ads.txt tab.
+#    Copy the exact inmobi.com line it gives you.
+#
+# 5. ironSource (also via Unity LevelPlay):
+#    ironSource/LevelPlay dashboard -> Monetize -> your app -> ads.txt tab.
+#    Copy the exact line(s) it gives you (ironsource.com and/or others).
+#
+# Paste each network's exact line below this point, one per line, then
+# publish this file at:  https://<your-domain>/app-ads.txt  (site root,
+# not in a subfolder). Then set that same domain as your app's Marketing
+# URL and Support URL in App Store Connect, so AdMob/other networks can
+# find and verify it.
+
