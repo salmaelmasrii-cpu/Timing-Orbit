@@ -3,4 +3,5 @@ use_frameworks!
 
 target 'App' do
   pod 'InMobiSDK'
+  pod 'FBAudienceNetwork'
 end

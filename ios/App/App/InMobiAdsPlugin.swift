@@ -86,7 +86,7 @@ public class InMobiAdsPlugin: CAPPlugin, CAPBridgedPlugin {
             return
         }
 
-        guard let ad = rewardedAd, ad.placementId == NSNumber(value: placementId) else {
+        guard let ad = rewardedAd, ad.placementId == placementId else {
             loadInterstitialClass(placementId: placementId) { [weak self] ad, errorMsg in
                 if let errorMsg {
                     call.reject(errorMsg)
@@ -131,7 +131,7 @@ public class InMobiAdsPlugin: CAPPlugin, CAPBridgedPlugin {
             return
         }
 
-        guard let ad = interstitialAd, ad.placementId == NSNumber(value: placementId) else {
+        guard let ad = interstitialAd, ad.placementId == placementId else {
             loadInterstitialClass(placementId: placementId) { [weak self] ad, errorMsg in
                 if let errorMsg {
                     call.reject(errorMsg)

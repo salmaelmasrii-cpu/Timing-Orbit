@@ -1,0 +1,24 @@
+{
+  "originHash" : "e8f61a06b2cb2a47eeb14814b4f1965543c643df1b7347542c407e1cb5078165",
+  "pins" : [
+    {
+      "identity" : "capacitor-swift-pm",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ionic-team/capacitor-swift-pm.git",
+      "state" : {
+        "revision" : "0b6882e9a3288342aacf36348e5a94e4f1dd7b13",
+        "version" : "8.5.2"
+      }
+    },
+    {
+      "identity" : "unity-ads-swift-package",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Unity-Technologies/Unity-Ads-Swift-Package",
+      "state" : {
+        "revision" : "2d489ee19ef73cdb51410ad09f0f13cb4f9cb388",
+        "version" : "4.20.1"
+      }
+    }
+  ],
+  "version" : 3
+}
