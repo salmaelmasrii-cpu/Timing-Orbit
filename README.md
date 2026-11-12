@@ -1,20 +1,60 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# Timing Orbit
 
-# Run and deploy your AI Studio app
+A single-tap arcade game for mobile. A node orbits a ring, and you tap the screen the moment it enters the target zone.
 
-This contains everything you need to run your app locally.
+## Features
 
-View your app in AI Studio: https://ai.studio/apps/f25961b3-1cec-4c5e-8cfb-8ef260dc3c48
+- **One-tap gameplay**: easy to learn, hard to master
+- **Dual precision zones**: the safe arc gives +1 point, and the small sweet spot in the center gives +3 and builds your combo
+- **Fever mode**: sweet-spot hits fill the Fever Meter for bonus scoring
+- **Levels that speed up** as you progress
+- **Synthesized audio**: all sound effects are generated in real time
+- **Themes and unlocks**: earn new looks as you level up
+- **Haptic feedback** on iOS
 
-## Run Locally
+## Built with
 
-**Prerequisites:**  Node.js
+- React + TypeScript
+- Vite and Tailwind CSS
+- Capacitor (iOS app)
 
+## Run locally
+
+**You'll need:** Node.js
 
 1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+   ```bash
+   npm install
+   ```
+2. Start the dev server:
+   ```bash
+   npm run dev
+   ```
+3. Open http://localhost:3000 in your browser.
+
+## Build the iOS app
+
+```bash
+npm run build
+npx cap sync ios
+npx cap open ios
+```
+
+Then build and run from Xcode.
+
+## Project structure
+
+| Folder | What's inside |
+| --- | --- |
+| `src/engine` | Game engine and physics |
+| `src/components` | Menus, overlays and HUD |
+| `src/audio` | Sound synthesizer |
+| `src/themes` | Visual themes |
+| `src/config` | Level settings |
+| `src/services` | Ads integration |
+| `ios` | Native iOS project |
+| `website` | Support and privacy pages |
+
+---
+
+Made by Salma Elmasry
